@@ -1,0 +1,13 @@
+{{> header}}
+<main>
+  <h2>Your Dashboard</h2>
+  <a href="/post/new">Create New Post</a>
+  {{#each posts}}
+    <article>
+      <h3>{{this.title}}</h3>
+      <a href="/post/{{this.id}}">View Post</a>
+      <a href="/post/{{this.id}}/edit">Edit</a>
+      <a href="/post/{{this.id}}/delete">Delete</a>
+    </article>
+  {{/each}}
+</main>
