@@ -6,6 +6,8 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
 require('dotenv').config();
 
+const { User, Post, Comment } = require('./models');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -32,20 +34,28 @@ const hbs = exphbs.create({
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
-
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
-app.use('/', require('./controllers/homeRoutes'));
-app.use('/api/posts', require('./controllers/api/postApiRoutes'));
-app.use('/api/users', require('./controllers/api/userApiRoutes'));
-app.use('/', require('./controllers/postRoutes'));
-app.use('/', require('./controllers/userRoutes'));
+// Import route files
+const homeRoutes = require('./controllers/homeRoutes');
+const postApiRoutes = require('./controllers/api/postApiRoutes');
+const userApiRoutes = require('./controllers/api/userApiRoutes');
+const postRoutes = require('./controllers/postRoutes');
+const userRoutes = require('./controllers/userRoutes');
+
+// Use route files
+app.use('/', homeRoutes);
+app.use('/api/posts', postApiRoutes);
+app.use('/api/users', userApiRoutes);
+app.use('/', postRoutes);
+app.use('/', userRoutes);
 
 // Sync database and start server
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
+}).catch(err => {
+  console.error("Database sync error:", err);
 });
