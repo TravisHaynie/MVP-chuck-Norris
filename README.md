@@ -5,11 +5,12 @@ The MVP-chuck-Norris project is a CMS-style blog application built from scratch 
 
 
 ## Screenshot
+![Screenshot 2024-08-19 161223](https://github.com/user-attachments/assets/e1342e77-514d-4a47-9cab-a4aa6734c852)
 
-![Screenshot 2024-08-11 191446](https://github.com/user-attachments/assets/0c02cb23-444a-4170-a2b4-fe9c646440c1)
+
 
 ## repo-URL
-
+https://github.com/TravisHaynie/MVP-chuck-Norris
 
 
 ## Table of Contents
