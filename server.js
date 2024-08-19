@@ -55,7 +55,7 @@ app.use('/', userRoutes);
 
 // Sync database and start server
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
+  app.listen(PORT, () => console.log(`Now listening on http://localhost:${PORT}`));
 }).catch(err => {
   console.error("Database sync error:", err);
 });
