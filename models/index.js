@@ -1,4 +1,4 @@
-const User = require('./user'); // Import User model
+const User = require('./User'); // Import User model
 const Post = require('./post'); // Import Post model
 const Comment = require('./comment'); // Import Comment model
 
