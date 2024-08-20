@@ -11,7 +11,7 @@ router.post('/login', async (req, res) => {
       req.session.user_id = user.id;
       req.session.username = user.username;
       req.session.logged_in = true;
-      res.json({ message: 'Login successful' });
+      res.redirect('/dashboard'); // Redirect to dashboard after login
     } else {
       res.status(401).json({ message: 'Incorrect username or password' });
     }
@@ -23,10 +23,8 @@ router.post('/login', async (req, res) => {
 
 
 // POST signup
-// POST signup
 router.post('/signup', async (req, res) => {
   try {
-    // Hash password before saving
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
     const user = await User.create({
@@ -37,7 +35,7 @@ router.post('/signup', async (req, res) => {
     req.session.user_id = user.id;
     req.session.username = user.username;
     req.session.logged_in = true;
-    res.status(201).json(user);
+    res.redirect('/dashboard'); // Redirect to dashboard after signup
   } catch (err) {
     console.error('Signup error:', err); // Improved error logging
     res.status(500).json({ message: 'Internal server error' });
@@ -46,15 +44,14 @@ router.post('/signup', async (req, res) => {
 
 
 // POST logout
-// POST logout
 router.post('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
+      console.error('Logout error:', err); // Improved error logging
       return res.status(500).json({ message: 'Error logging out' });
     }
-    res.json({ message: 'Logged out successfully' });
+    res.redirect('/'); // Redirect to homepage after logout
   });
 });
-
 
 module.exports = router;

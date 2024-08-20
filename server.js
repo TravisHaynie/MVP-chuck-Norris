@@ -5,8 +5,8 @@ const path = require('path');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
 require('dotenv').config();
-
 require('./models');
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -39,19 +39,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Import route files
-const homeRoutes = require('./controllers/homeRoutes');
-const postApiRoutes = require('./controllers/api/postApiRoutes');
-const userApiRoutes = require('./controllers/api/userApiRoutes');
-const postRoutes = require('./controllers/postRoutes');
-const userRoutes = require('./controllers/userRoutes');
-
-// Use route files
-app.use('/', homeRoutes);
-app.use('/api/posts', postApiRoutes);
-app.use('/api/users', userApiRoutes);
-app.use('/', postRoutes);
-app.use('/', userRoutes);
+const routes = require('./controllers'); // Import routes from the controllers directory
+app.use(routes); 
 
 // Sync database and start server
 sequelize.sync({ force: false }).then(() => {
